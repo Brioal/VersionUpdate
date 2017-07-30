@@ -20,7 +20,7 @@ import java.io.File;
  * Created by Brioal on 2017/7/30.
  */
 
-class ApkDownLoadService extends IntentService {
+public class ApkDownLoadService extends IntentService {
     private long mTaskId = -1;//下载任务的ID
     private DownloadManager mDownloadManager;
     private String mApkPath = "";
