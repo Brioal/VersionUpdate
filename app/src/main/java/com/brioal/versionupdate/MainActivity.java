@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void downApk(View view) {
         ApkDownLoadBuild build = new ApkDownLoadBuild(this);
-        build.setApkName("test.apk")
+        build
                 .setApkUrl(url)
                 .build();
     }

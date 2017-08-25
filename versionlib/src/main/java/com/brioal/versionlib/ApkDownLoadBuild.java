@@ -12,7 +12,6 @@ import android.content.Intent;
 public class ApkDownLoadBuild {
     private Context mContext;
     private String mApkUrl = "";//apk的下载地址
-    private String mApkName = "";//下载之后的保存名称
 
 
     public ApkDownLoadBuild(Context context) {
@@ -25,16 +24,10 @@ public class ApkDownLoadBuild {
         return this;
     }
 
-    public ApkDownLoadBuild setApkName(String apkName) {
-        mApkName = apkName;
-        return this;
-    }
-
     //开始下载
     public void build() {
         Intent intent = new Intent(mContext, ApkDownLoadService.class);
         intent.putExtra("mApkUrl", mApkUrl);
-        intent.putExtra("mApkName", mApkName);
         mContext.startService(intent);
     }
 
