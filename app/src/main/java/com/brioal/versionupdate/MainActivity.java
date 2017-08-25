@@ -7,7 +7,7 @@ import android.view.View;
 import com.brioal.versionlib.ApkDownLoadBuild;
 
 public class MainActivity extends AppCompatActivity {
-    private String url = "http://001file.liqucn.com/upload/2014/xitong/gruv.poweroff2.poweroff2_2.0.0_liqucn.com.apk";
+    private String url = "https://res.wx.qq.com/open/zh_CN/htmledition/res/dev/download/sdk/Gen_Signature_Android2.apk";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

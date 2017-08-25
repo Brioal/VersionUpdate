@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 
 import java.io.File;
@@ -35,7 +37,7 @@ public class ApkDownLoadService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         mApkUrl = intent.getStringExtra("mApkUrl");
-        mApkName = intent.getStringExtra("mApkName");
+        mApkName = System.currentTimeMillis() + ".apk";
         if (mApkName == null || mApkUrl == null) {
             ToastUtils.showToastL(this, "下载失败,请检查网络后重试");
             return;
@@ -95,10 +97,17 @@ public class ApkDownLoadService extends IntentService {
     protected void installAPK(File file) {
         if (!file.exists()) return;
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        Uri uri = Uri.parse("file://" + file.toString());
-        intent.setDataAndType(uri, "application/vnd.android.package-archive");
-        //在服务中开启activity必须设置flag,后面解释
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Uri data;
+        // 判断版本大于等于7.0
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            // "net.csdn.blog.ruancoder.fileprovider"即是在清单文件中配置的authorities
+            data = FileProvider.getUriForFile(this, "com.brioal.versionlib.fileprovider", file);
+            // 给目标应用一个临时授权
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            data = Uri.fromFile(file);
+        }
+        intent.setDataAndType(data, "application/vnd.android.package-archive");
         startActivity(intent);
     }
 
