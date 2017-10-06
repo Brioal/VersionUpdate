@@ -102,12 +102,13 @@ public class ApkDownLoadService extends IntentService {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             // "net.csdn.blog.ruancoder.fileprovider"即是在清单文件中配置的authorities
             data = FileProvider.getUriForFile(this, "com.brioal.versionlib.fileprovider", file);
-            // 给目标应用一个临时授权
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         } else {
             data = Uri.fromFile(file);
         }
         intent.setDataAndType(data, "application/vnd.android.package-archive");
+        // 给目标应用一个临时授权
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
